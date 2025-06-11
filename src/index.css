@@ -1,0 +1,64 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  list-style: none;
+  text-decoration: none;
+}
+
+#signup,#Login{
+  height: 80vh;
+}
+.font-large{
+  font-size: xx-large;
+}
+.hover{
+  background-color: white !important;
+  color: #ff3131 !important;
+}
+.border-down{
+  border-bottom: 2px solid #ff3131 !important;
+}
+#main-sec{
+  min-height: 80vh;
+}
+.todo,.Login,.signup{
+box-shadow: 0px 0px 18px 1px rgba(0,0,0,0.51);
+-webkit-box-shadow: 0px 0px 18px 1px rgba(0,0,0,0.51);
+-moz-box-shadow: 0px 0px 18px 1px rgba(0,0,0,0.51);
+}
+.bg-red{
+  background-color: #ff3131 !important;
+}
+.text-red{
+  color: #ff3131 !important;
+}
+.border-red{
+  border: 2px solid #ff3131 !important;
+}
+.br{
+  border-radius: 8px;
+}
+/* .todo{
+  height: 50vh;
+} */
+
+.todo .add{
+  border-radius: 0 10px 10px 0;
+  height: 35px;
+  margin: 8px 0;
+}
+
+.todo input{
+  border-radius: 10px 0 0 10px;
+  background-color: lightgray;
+}
+@media screen and (min-height:768px){
+  .todo{
+  min-height: 35vh;
+}
+.Login,.signup{
+  height: 35vh;
+}
+}
