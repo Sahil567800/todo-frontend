@@ -1,39 +1,59 @@
-import { useState } from "react"
-import {useNavigate} from "react-router-dom"
-import { useContext } from "react"
+import { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import loginContext from "./context"
+
 export const SignUp = () => {
+
     const navigate = useNavigate()
-    const {toast} = useContext(loginContext)
+    const { toast } = useContext(loginContext)
     const [inputs, setInputs] = useState({ email: "", password: "", username: "" });
     const [loading, setLoading] = useState(false);
     const handleChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
-    const handleSubmit = async () => {
-        if(inputs.username.trim()==="" || inputs.password.trim()===""||inputs.email.trim()===""){
-            return
+    const handleSignUp = async () => {
+
+        const email = inputs.email.trim().toLowerCase();
+        const password = inputs.password.trim();
+        const username = inputs.username.trim();
+
+        // Validation
+        if (!username || !email || !password) {
+            toast.warning("All fields are required");
+            return;
+        }
+
+        if (username.length < 5) {
+            toast.warning("Username must be at least 5 characters");
+            return;
+        }
+
+
+        if (password.length < 8) {
+            toast.warning("Password must be at least 8 characters");
+            return;
         }
         try {
-             setLoading(true);
+            setLoading(true);
             const req = await fetch("http://localhost:3000/api/v1/signUp", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(inputs)
-        })
-        const res = await req.json()
-        if(res.message==="User Already exists"){
-            toast.error(res.message)
-        }
-        else{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password, username })
+            })
+            const res = await req.json()
+            if (!req.ok) {
+                toast.error(res.message || "Sign up failed");
+                return;
+            }
             setInputs({ email: "", password: "", username: "" })
             toast.success(res.message)
             navigate('/login')
-        }
+
         } catch (error) {
             console.log(error)
+            toast.error("Something went wrong. Please try again.");
         }
-        finally{setLoading(false)}
+        finally { setLoading(false) }
     }
     return (
         <>
@@ -53,7 +73,7 @@ export const SignUp = () => {
                                     <input type="password" className="py-1  px-4" placeholder="Password" name="password" onChange={handleChange} value={inputs.password} />
                                 </div>
                                 <div className="text-center">
-                                    <button className="btn bg-red text-white my-3 px-3 py-2 " disabled={loading} onClick={handleSubmit}>Sign Up</button>
+                                    <button className="btn bg-red text-white my-3 px-3 py-2" disabled={loading} onClick={handleSignUp}>Sign Up</button>
                                 </div>
                             </div>
                         </div>

@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom"
 import { useContext } from "react";
 import loginContext from "./context";
-import { FaCircleUser } from "react-icons/fa6"
-import { FaBars } from "react-icons/fa6";
+import { FaCircleUser, FaBars } from "react-icons/fa6"
+
 const Header = () => {
-    const { login,setLogin, user,setUser,toast,setTodos} = useContext(loginContext)
-   const handleLogout=()=>{
-    setLogin(false)
-    setUser("")
-    localStorage.removeItem("user");
-    setTodos([]);                     
-    toast.success("Logged Out Successfully")
-   }
+
+    const { login, setLogin, user, setUser, toast, setTodos } = useContext(loginContext)
+
+    const handleLogout = () => {
+        setLogin(false)
+        setUser("")
+        localStorage.removeItem("user");
+        setTodos([]);
+        toast.success("Logged Out Successfully")
+    }
     return (
         <>
             <header className="py-3">

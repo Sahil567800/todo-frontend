@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
-import { FaPlus, FaCross } from "react-icons/fa6";
-import { FaEdit, FaRegEdit, FaTimes } from "react-icons/fa";
+import { FaPlus,} from "react-icons/fa6";
+import { FaEdit, FaTimes } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useContext } from "react";
 import loginContext from "./context";
-// import { data } from 'react-router-dom';
+
 const Todo = () => {
+
     const [input, setInput] = useState("")
     const [editId, setEditId] = useState(null);
     const { login, user, toast,setUser,setLogin,todos,setTodos } = useContext(loginContext)
 
     useEffect(() => {
         const fetchTodos = async () => {
-            if (!login) return;
+           if (!login || !user || !user._id) return;
             try {
                 const req = await fetch("http://localhost:3000/api/v2/getTodos", {
                     method: "POST",
@@ -37,6 +38,7 @@ const Todo = () => {
             setLogin(true)
         }
     },[])
+
     const handleChange = (e) => {
         setInput(e.target.value)
     }
@@ -78,11 +80,10 @@ const Todo = () => {
             })
             const data = await req.json()
             setTodos(todos.filter((todo) => todo._id !== id))
-            // alert(data.message)
             toast.success(data.message)
         } catch (error) {
             console.log(error)
-            alert("error", error)
+            toast.error("Something went wrong");
         }
     }
     const handleEdit = (todo) => {
@@ -109,7 +110,7 @@ const Todo = () => {
             setEditId(null);
         } catch (error) {
             console.log(error)
-            alert(error, "error")
+            toast.error("Something went wrong");
         }
     }
     return (
@@ -120,7 +121,7 @@ const Todo = () => {
                         <div className="todo text-center bg-white py-1">
                             <h3 className="text-red my-3 fw-bold"> TO-DO LIST</h3>
                             <div className="input-bar d-flex justify-content-center">
-                                <input type="text" value={input} onChange={handleChange} className="py-1 px-4 my-2" />
+                                <input type="text" value={input} onChange={handleChange} className="py-1 px-4 my-2"  placeholder="Enter a todo..." />
                                 <button onClick={editId ? handleUpdate : handleAdd} className="btn bg-red add text-white fw-bold hover px-4">{editId ? <FaEdit /> : <FaPlus />}</button>
 
                             </div>

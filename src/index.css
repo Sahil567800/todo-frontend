@@ -13,9 +13,8 @@
 .font-large{
   font-size: xx-large;
 }
-.hover{
-  background-color: white !important;
-  color: #ff3131 !important;
+button:hover{
+font-weight: 700;
 }
 .border-down{
   border-bottom: 2px solid #ff3131 !important;

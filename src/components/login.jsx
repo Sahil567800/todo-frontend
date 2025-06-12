@@ -1,10 +1,9 @@
-import { useState } from "react"
+import { useState , useContext} from "react"
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import loginContext from "./context";
 
 export const LogIn = () => {
-    
+
     const [inputs, setInputs] = useState({ email: "", password: "" })
     const [loading, setLoading] = useState(false);
     const history = useNavigate()
@@ -13,8 +12,18 @@ export const LogIn = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value })
     }
     const handleLogin = async () => {
-        if (inputs.email.trim() === "" || inputs.password.trim() === "") {
-            return
+       
+        // Basic validation
+        if (!inputs.email || !inputs.password) {
+            loginState.toast.warning("Email and Password are required");
+            return;
+        }
+
+
+        // Password length check
+        if (inputs.password.length < 8) {
+            loginState.toast.warning("Password must be at least 8 characters");
+            return;
         }
         try {
             setLoading(true)
@@ -24,19 +33,19 @@ export const LogIn = () => {
                 body: JSON.stringify(inputs)
             })
             const res = await req.json()
-           loginState.toast.warning(res.message)
-            if (res.userData) {
-                loginState.toast(`welcome ${res.userData.username}`)
-                loginState.setLogin(true)
-                loginState.setUser(res.userData);
-                localStorage.setItem("user", JSON.stringify(res.userData)); // ✅ Save here
-                history("/")
+            if (!req.ok) {
+                loginState.toast.warning(res.message || "Login failed");
+                return;
             }
-            setLoading(false)
 
-
+            loginState.toast(`Welcome ${res.userData.username}`);
+            loginState.setLogin(true);
+            loginState.setUser(res.userData);
+            localStorage.setItem("user", JSON.stringify(res.userData));
+            history("/");
         } catch (error) {
             console.log(error)
+            loginState.toast.error("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }
