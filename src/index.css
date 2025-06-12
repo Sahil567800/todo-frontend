@@ -5,6 +5,7 @@
   outline: none;
   list-style: none;
   text-decoration: none;
+  border:none;
 }
 
 #signup,#Login{
