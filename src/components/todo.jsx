@@ -45,6 +45,7 @@ const Todo = () => {
 
     const handleAdd = async () => {
         if (input.trim() === "") {
+            toast.warning("Please Enter a Todo")
             return;
         }
         if (!login) {
