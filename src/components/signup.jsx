@@ -38,6 +38,7 @@ export const SignUp = () => {
             const req = await fetch("https://todo-backend.onrender.com/api/v1/signUp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials:"include",
                 body: JSON.stringify({ email, password, username })
             })
             const res = await req.json()

@@ -30,6 +30,7 @@ export const LogIn = () => {
             const req = await fetch("https://todo-backend.onrender.com/api/v1/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials:"include",
                 body: JSON.stringify(inputs)
             })
             const res = await req.json()

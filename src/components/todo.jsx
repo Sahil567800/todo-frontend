@@ -20,6 +20,7 @@ const Todo = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
+                   credentials: "include",
                     body: JSON.stringify({ user: user._id })
                 });
                 const data = await req.json();
@@ -63,6 +64,7 @@ const Todo = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
+                   credentials: "include",
                     body: JSON.stringify({ todos: input, email: user.email })
 
                 })
@@ -76,7 +78,7 @@ const Todo = () => {
 
     const handleDelete = async (id) => {
         try {
-            const req = await fetch(`https://todo-backend.onrender.com/v2/deleteTodo/${id}`, {
+            const req = await fetch(`https://todo-backend.onrender.com/api/v2/deleteTodo/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
