@@ -15,7 +15,7 @@ const Todo = () => {
         const fetchTodos = async () => {
            if (!login || !user || !user._id) return;
             try {
-                const req = await fetch("http://todo-backend.onrender.com/api/v2/getTodos", {
+                const req = await fetch("https://todo-backend.onrender.com/api/v2/getTodos", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const Todo = () => {
             return
         }
         try {
-            let req = await fetch("http://todo-backend.onrender.com/api/v2/addTodo",
+            let req = await fetch("https://todo-backend.onrender.com/api/v2/addTodo",
                 {
                     method: "POST",
                     headers: {
@@ -76,7 +76,7 @@ const Todo = () => {
 
     const handleDelete = async (id) => {
         try {
-            const req = await fetch(`http://todo-backend.onrender.com/v2/deleteTodo/${id}`, {
+            const req = await fetch(`https://todo-backend.onrender.com/v2/deleteTodo/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -100,7 +100,7 @@ const Todo = () => {
             return;
         }
         try {
-            const req = await fetch(`http://todo-backend.onrender.com/api/v2/updateTodo/${editId}`,
+            const req = await fetch(`https://todo-backend.onrender.com/api/v2/updateTodo/${editId}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
