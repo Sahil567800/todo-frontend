@@ -15,7 +15,7 @@ const Todo = () => {
         const fetchTodos = async () => {
            if (!login || !user || !user._id) return;
             try {
-                const req = await fetch("http://localhost:3000/api/v2/getTodos", {
+                const req = await fetch("http://todo-backend.onrender.com/api/v2/getTodos", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -52,8 +52,12 @@ const Todo = () => {
             toast.warning("Please Login First")
             return
         }
+          if (!todos) {
+            toast.warning("Something Went Wrong")
+            return
+        }
         try {
-            let req = await fetch("http://localhost:3000/api/v2/addTodo",
+            let req = await fetch("http://todo-backend.onrender.com/api/v2/addTodo",
                 {
                     method: "POST",
                     headers: {
@@ -72,7 +76,7 @@ const Todo = () => {
 
     const handleDelete = async (id) => {
         try {
-            const req = await fetch(`http://localhost:3000/api/v2/deleteTodo/${id}`, {
+            const req = await fetch(`http://todo-backend.onrender.com/v2/deleteTodo/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -96,7 +100,7 @@ const Todo = () => {
             return;
         }
         try {
-            const req = await fetch(`http://localhost:3000/api/v2/updateTodo/${editId}`,
+            const req = await fetch(`http://todo-backend.onrender.com/api/v2/updateTodo/${editId}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -122,7 +126,7 @@ const Todo = () => {
                         <div className="todo text-center bg-white py-1">
                             <h3 className="text-red my-3 fw-bold"> TO-DO LIST</h3>
                             <div className="input-bar d-flex justify-content-center">
-                                <input type="text" value={input} onChange={handleChange} className="py-1 px-4 my-2"  placeholder="Enter a todo..." />
+                                <input type="text" value={input} onChange={handleChange} className="py-1 px-4 my-2 border border-none"  placeholder="Enter a todo..." />
                                 <button onClick={editId ? handleUpdate : handleAdd} className="btn bg-red add text-white fw-bold hover px-4">{editId ? <FaEdit /> : <FaPlus />}</button>
 
                             </div>
